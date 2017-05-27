@@ -15,10 +15,12 @@
 
 package org.gearvrf.unittestutils;
 
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Environment;
+import android.Manifest;
 
 import net.jodah.concurrentunit.Waiter;
 
@@ -83,7 +85,6 @@ public class GVRTestUtils implements GVRMainMonitor {
         if (testableMain != null) {
             testableMain.setMainMonitor(this);
         }
-
     }
 
     /**
@@ -265,6 +266,10 @@ public class GVRTestUtils implements GVRMainMonitor {
     public void screenShot(final String category, final String testname, final Waiter waiter,
                            final boolean doCompare) throws TimeoutException
     {
+        if(gvrContext.getContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            Log.e(category,"Screenshot failed. GVR Tester 'Storage' permission not granted.");
+            return;
+        }
         GVRScreenshotCallback callback = new GVRScreenshotCallback()
         {
             private void compareWithGolden(Bitmap bitmap, String testname, Waiter waiter)
@@ -324,6 +329,7 @@ public class GVRTestUtils implements GVRMainMonitor {
                     File d = new File(dir);
                     d.mkdirs();
                     File f = new File(d, filename);
+
                     FileOutputStream fo = new FileOutputStream(f);
                     fo.write(bytes.toByteArray());
                     fo.close();
