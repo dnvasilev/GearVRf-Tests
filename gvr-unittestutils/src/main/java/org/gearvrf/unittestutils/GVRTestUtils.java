@@ -45,7 +45,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class GVRTestUtils implements GVRMainMonitor {
     private static final String TAG = GVRTestUtils.class.getSimpleName();
     public static final int TEST_TIMEOUT = 2000;
-    public static final String DEVICE_TYPE = "S7Edge";
+    public static final String DEVICE_TYPE = "Note4";
     protected static final int SCREENSHOT_TEST_TIMEOUT = 10000;
 
     private GVRContext gvrContext;
