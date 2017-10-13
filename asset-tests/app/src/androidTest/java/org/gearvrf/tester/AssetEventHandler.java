@@ -149,6 +149,11 @@ class AssetEventHandler implements IAssetEvents
 
     public GVRSceneObject loadTestModel(String modelfile, int numTex, int texError, String testname) throws TimeoutException
     {
+        return loadTestModel(modelfile,numTex,texError,testname,2);
+    }
+
+    public GVRSceneObject loadTestModel(String modelfile, int numTex, int texError, String testname, int frames) throws TimeoutException
+    {
         GVRContext ctx  = mTester.getGvrContext();
         GVRScene scene = mTester.getMainScene();
         GVRSceneObject model = null;
@@ -167,7 +172,7 @@ class AssetEventHandler implements IAssetEvents
         checkAssetErrors(0, texError);
         if (testname != null)
         {
-            mTester.waitForXFrames(2);
+            mTester.waitForXFrames(frames);
             mTester.screenShot(mCategory, testname, mWaiter, mDoCompare);
         }
         return model;
