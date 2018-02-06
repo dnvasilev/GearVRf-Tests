@@ -192,3 +192,16 @@ run-tests8() {
 end-of-list
 	)
 }
+
+# Assuming zero resource leaks:
+run-tests0() {
+	(
+		while read TEST_GROUP TEST_NAME SUBTEST_NAME
+		do
+			run-single-test < /dev/null # adb sometimes consumes all input breaking the loop
+		done <<end-of-list
+			framework-tests
+			asset-tests
+end-of-list
+	)
+}
